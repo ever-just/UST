@@ -63,8 +63,8 @@ Thumbs.db
 personal_notes/
 scratch/
 
-# Large media files (if any get added later)
-*.mp4
+# Large media files (if any get added later) - MP4s tracked by LFS
+# *.mp4 - commented out as we track MP4s with LFS
 *.avi
 *.mov
 *.wmv
