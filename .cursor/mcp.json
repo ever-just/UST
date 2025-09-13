@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "enhanced-outlook-mcp": {
+      "command": "node",
+      "args": [
+        "/Users/cloudaistudio/Documents/UST/enhanced-outlook-mcp/index.js"
+      ],
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  }
+}
+

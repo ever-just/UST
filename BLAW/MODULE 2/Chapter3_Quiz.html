@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3: Introduction to Contracts - Quiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .quiz-content {
+            padding: 30px;
+        }
+
+        .question-container {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .question-container.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 5px solid #3498db;
+        }
+
+        .question h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .options {
+            list-style: none;
+        }
+
+        .options li {
+            margin: 10px 0;
+        }
+
+        .options input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .options label {
+            cursor: pointer;
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: block;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .options label:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+
+        .options input[type="radio"]:checked + label {
+            background: #2196f3;
+            color: white;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .question-counter {
+            text-align: center;
+            color: #7f8c8d;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .score {
+            font-size: 3em;
+            font-weight: bold;
+            color: #2ecc71;
+            margin: 20px 0;
+        }
+
+        .score.poor {
+            color: #e74c3c;
+        }
+
+        .score.average {
+            color: #f39c12;
+        }
+
+        .feedback {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #3498db;
+        }
+
+        .review-btn {
+            background: #9b59b6;
+            color: white;
+            margin: 10px;
+        }
+
+        .review-btn:hover {
+            background: #8e44ad;
+        }
+
+        .explanation {
+            display: none;
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border-left: 4px solid #2ecc71;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .case-highlight {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #ffc107;
+            margin: 10px 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Contract Law Quiz</h1>
+            <p>Chapter 3: Introduction to Contracts</p>
+        </div>
+
+        <div class="quiz-content">
+            <div class="question-counter">
+                Question <span id="current-question">1</span> of <span id="total-questions">15</span>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+
+            <!-- Question 1 -->
+            <div class="question-container active">
+                <div class="question">
+                    <h3>1. In the River Park Hospital v. BlueCross BlueShield case, what was the main legal issue after the contract expired?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q1a" name="q1" value="a">
+                            <label for="q1a">Whether River Park could refuse to treat BlueCare patients</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q1b" name="q1" value="b">
+                            <label for="q1b">Whether BlueCare was required to pay River Park's standard rates for emergency services</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q1c" name="q1" value="c">
+                            <label for="q1c">Whether the original contract could be automatically renewed</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q1d" name="q1" value="d">
+                            <label for="q1d">Whether EMTALA applied to private hospitals</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    After the contract expired, River Park was still legally required under EMTALA to provide emergency services to BlueCare enrollees, but disagreed with BlueCare about payment rates. River Park wanted to charge standard rates while BlueCare insisted on paying the old contracted rates.
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>2. What are the essential elements required for a legally enforceable contract?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q2a" name="q2" value="a">
+                            <label for="q2a">Offer, acceptance, and payment</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q2b" name="q2" value="b">
+                            <label for="q2b">Mutual assent, consideration, legality, capacity, and sufficiently definite promise</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q2c" name="q2" value="c">
+                            <label for="q2c">Written agreement, witnesses, and notarization</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q2d" name="q2" value="d">
+                            <label for="q2d">Parties, terms, and signatures</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    The five essential elements are: (1) sufficiently definite promise, (2) mutual assent, (3) consideration, (4) legality, and (5) capacity. All must be present for an enforceable contract.
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>3. In Steinberg v. Chicago Medical School, what did the court find constituted the contract?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q3a" name="q3" value="a">
+                            <label for="q3a">The school's acceptance letter</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q3b" name="q3" value="b">
+                            <label for="q3b">The school's bulletin was an offer, Steinberg's application and fee was acceptance</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q3c" name="q3" value="c">
+                            <label for="q3c">The enrollment agreement signed after admission</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q3d" name="q3" value="d">
+                            <label for="q3d">No contract existed</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    The court found that the school's bulletin constituted an offer with definite terms about evaluation criteria. Steinberg's application and $15 fee constituted acceptance, creating a binding contract requiring the school to evaluate applications according to stated criteria.
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>4. What is the difference between contracts implied in fact and contracts implied in law?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q4a" name="q4" value="a">
+                            <label for="q4a">Implied in fact requires writing; implied in law does not</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q4b" name="q4" value="b">
+                            <label for="q4b">Implied in fact shows mutual assent through conduct; implied in law is imposed by courts for fairness</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q4c" name="q4" value="c">
+                            <label for="q4c">They are the same thing with different names</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q4d" name="q4" value="d">
+                            <label for="q4d">Implied in fact is stronger than implied in law</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    Contracts implied in fact show mutual assent through the parties' conduct and circumstances. Contracts implied in law (unjust enrichment/quasi-contract) are imposed by courts based on justice and equity, even without mutual assent.
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>5. What are the three requirements for consideration?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q5a" name="q5" value="a">
+                            <label for="q5a">Legal detriment and bargained for exchange (both parties must provide consideration)</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q5b" name="q5" value="b">
+                            <label for="q5b">Money, goods, and services</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q5c" name="q5" value="c">
+                            <label for="q5c">Past, present, and future benefits</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q5d" name="q5" value="d">
+                            <label for="q5d">Adequate value, fairness, and equity</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: A</strong><br>
+                    Consideration requires: (1) legal detriment (doing something you don't have to do or forgoing something you're entitled to), (2) bargained for exchange, and (3) both parties must provide consideration for a valid contract.
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>6. Under the TennCare system, what was the "gatekeeping model"?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q6a" name="q6" value="a">
+                            <label for="q6a">Hospitals controlled which patients could receive care</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q6b" name="q6" value="b">
+                            <label for="q6b">Primary care physicians (PCPs) controlled access to specialized care and referrals</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q6c" name="q6" value="c">
+                            <label for="q6c">Insurance companies directly approved all treatments</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q6d" name="q6" value="d">
+                            <label for="q6d">Patients could see any doctor without referrals</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    The gatekeeping model assigned each enrollee to a primary care physician (PCP) who was paid a per capita rate to perform "gatekeeping" functions, ensuring enrollees only received medically necessary care and controlling referrals to specialists.
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>7. What is EMTALA and why was it important in the River Park Hospital case?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q7a" name="q7" value="a">
+                            <label for="q7a">A state law requiring hospitals to accept insurance</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q7b" name="q7" value="b">
+                            <label for="q7b">A federal law requiring hospitals to provide emergency care until stabilized, regardless of insurance</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q7c" name="q7" value="c">
+                            <label for="q7c">A contract provision about payment terms</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q7d" name="q7" value="d">
+                            <label for="q7d">A hospital policy about emergency procedures</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    EMTALA (Emergency Medical Treatment and Active Labor Act) is a 1986 federal law requiring hospitals to provide emergency services until a patient's condition is stabilized, regardless of insurance status. This forced River Park to treat BlueCare patients even after their contract expired.
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>8. In the WellSpan Health v. Bayliss case, what were the legitimate business interests that supported the non-compete clause?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q8a" name="q8" value="a">
+                            <label for="q8a">Eliminating all competition in the region</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q8b" name="q8" value="b">
+                            <label for="q8b">Patient referral base, investment in equipment, personnel, and marketing</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q8c" name="q8" value="c">
+                            <label for="q8c">Preventing any doctor from leaving the hospital</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q8d" name="q8" value="d">
+                            <label for="q8d">Maintaining high prices for medical services</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    WellSpan had legitimate business interests in protecting its patient referral base and substantial investments including $900,000 in equipment, additional personnel, marketing strategies, and referral linkages that it had built around Dr. Bayliss's perinatology practice.
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>9. Which contracts must be in writing under the Statute of Frauds?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q9a" name="q9" value="a">
+                            <label for="q9a">All contracts over $100</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q9b" name="q9" value="b">
+                            <label for="q9b">Real estate, goods over certain amounts, suretyships, and long-term contracts</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q9c" name="q9" value="c">
+                            <label for="q9c">Only employment contracts</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q9d" name="q9" value="d">
+                            <label for="q9d">All business contracts</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    The Statute of Frauds requires written contracts for: real estate transactions, goods over certain dollar amounts ($500 or $5000), suretyships (promises to pay another's debts), and long-term contracts that cannot be completed within one year.
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>10. What is the difference between expectation, reliance, and restitution damages?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q10a" name="q10" value="a">
+                            <label for="q10a">They are all the same type of damages</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q10b" name="q10" value="b">
+                            <label for="q10b">Expectation = contract value; Reliance = reasonable expenses incurred; Restitution = money already paid</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q10c" name="q10" value="c">
+                            <label for="q10c">Expectation is for future losses; Reliance is for past losses; Restitution is for present losses</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q10d" name="q10" value="d">
+                            <label for="q10d">Only expectation damages are legally enforceable</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    Expectation damages estimate the value of the contract if performed; reliance damages compensate for reasonable expenses incurred after contract formation but before breach; restitution returns money already paid to the breaching party.
+                </div>
+            </div>
+
+            <!-- Question 11 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>11. In Anesthesia Medical Group v. Buras, why were the liquidated damages enforceable?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q11a" name="q11" value="a">
+                            <label for="q11a">Because they were exactly equal to actual damages</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q11b" name="q11" value="b">
+                            <label for="q11b">Because damages were difficult to predict and the amount was reasonable at contract formation</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q11c" name="q11" value="c">
+                            <label for="q11c">Because Buras agreed to them in writing</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q11d" name="q11" value="d">
+                            <label for="q11d">Because they were less than $20,000</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    Liquidated damages are enforceable when: (1) actual damages would be difficult to determine at contract formation, and (2) the amount bears a reasonable relationship to likely damages. AMG met both tests - replacement costs were unpredictable and $15,000 was reasonable (actual damages were $32,000).
+                </div>
+            </div>
+
+            <!-- Question 12 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>12. What is "mutual assent" and how is it typically proven?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q12a" name="q12" value="a">
+                            <label for="q12a">Both parties signing the same document</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q12b" name="q12" value="b">
+                            <label for="q12b">Agreement between parties, typically shown through offer and acceptance</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q12c" name="q12" value="c">
+                            <label for="q12c">Payment of money by one party to another</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q12d" name="q12" value="d">
+                            <label for="q12d">Having witnesses present during negotiations</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    Mutual assent indicates voluntary agreement between parties to form a contract. It's typically proven through identifying: (1) an offer by the offeror, and (2) acceptance of that offer by the offeree. It can also be shown through "meeting of the minds."
+                </div>
+            </div>
+
+            <!-- Question 13 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>13. Why are advertisements generally NOT considered offers?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q13a" name="q13" value="a">
+                            <label for="q13a">Because they don't include prices</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q13b" name="q13" value="b">
+                            <label for="q13b">Because businesses lack intent to be bound to every person who sees the ad</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q13c" name="q13" value="c">
+                            <label for="q13c">Because they are not written contracts</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q13d" name="q13" value="d">
+                            <label for="q13d">Because they are too vague</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    Advertisements are typically viewed by thousands of people. Courts generally find that businesses lack sufficient intent to be contractually bound to each person who sees the advertisement, so ads are usually considered invitations to make offers rather than offers themselves.
+                </div>
+            </div>
+
+            <!-- Question 14 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>14. What was the final outcome in the River Park Hospital case regarding contract theory?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q14a" name="q14" value="a">
+                            <label for="q14a">Express contract was found to continue after expiration</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q14b" name="q14" value="b">
+                            <label for="q14b">No contract existed, so River Park could not recover</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q14c" name="q14" value="c">
+                            <label for="q14c">Contract implied in law (unjust enrichment) was found due to EMTALA requirements</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q14d" name="q14" value="d">
+                            <label for="q14d">Contract implied in fact was found based on the parties' conduct</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: C</strong><br>
+                    The court found no express or implied-in-fact contract after expiration, but recognized a contract implied in law (unjust enrichment) because: River Park was required by EMTALA to provide emergency care, BlueCare was required by state contract to pay for emergency services, leaving both parties with no choice but to deal with each other.
+                </div>
+            </div>
+
+            <!-- Question 15 -->
+            <div class="question-container">
+                <div class="question">
+                    <h3>15. What is the key difference between property rules and liability rules in contract remedies?</h3>
+                    <ul class="options">
+                        <li>
+                            <input type="radio" id="q15a" name="q15" value="a">
+                            <label for="q15a">Property rules involve real estate; liability rules involve personal property</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q15b" name="q15" value="b">
+                            <label for="q15b">Property rules (injunctions) let parties negotiate the price; liability rules (damages) let courts set the price</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q15c" name="q15" value="c">
+                            <label for="q15c">Property rules are more expensive than liability rules</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="q15d" name="q15" value="d">
+                            <label for="q15d">There is no meaningful difference between them</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="explanation">
+                    <strong>Correct Answer: B</strong><br>
+                    According to Calabresi and Melamed: Property rules (injunctions) protect entitlements by letting the parties negotiate the "price" of the entitlement, while liability rules (damages) protect entitlements by having courts assess the value of the entitlement.
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()" disabled>Previous</button>
+                <div>
+                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">Next</button>
+                    <button class="btn btn-primary" id="submit-btn" onclick="submitQuiz()" style="display: none;">Submit Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <h2>🎉 Quiz Complete!</h2>
+            <div class="score" id="score-display"></div>
+            <div class="feedback" id="feedback"></div>
+            <button class="btn review-btn" onclick="reviewAnswers()">Review Answers</button>
+            <button class="btn btn-primary" onclick="restartQuiz()">Retake Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        const totalQuestions = 15;
+        let answers = {};
+        let reviewMode = false;
+
+        const correctAnswers = {
+            q1: 'b', q2: 'b', q3: 'b', q4: 'b', q5: 'a',
+            q6: 'b', q7: 'b', q8: 'b', q9: 'b', q10: 'b',
+            q11: 'b', q12: 'b', q13: 'b', q14: 'c', q15: 'b'
+        };
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+            document.getElementById('progress').style.width = progress + '%';
+            document.getElementById('current-question').textContent = currentQuestion + 1;
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-container').forEach((q, i) => {
+                q.classList.toggle('active', i === index);
+            });
+            
+            document.getElementById('prev-btn').disabled = index === 0;
+            document.getElementById('next-btn').style.display = index === totalQuestions - 1 ? 'none' : 'inline-block';
+            document.getElementById('submit-btn').style.display = index === totalQuestions - 1 ? 'inline-block' : 'none';
+            
+            updateProgress();
+        }
+
+        function nextQuestion() {
+            const currentQuestionName = 'q' + (currentQuestion + 1);
+            const selectedAnswer = document.querySelector(`input[name="${currentQuestionName}"]:checked`);
+            
+            if (selectedAnswer) {
+                answers[currentQuestionName] = selectedAnswer.value;
+                
+                if (currentQuestion < totalQuestions - 1) {
+                    currentQuestion++;
+                    showQuestion(currentQuestion);
+                }
+            } else {
+                alert('Please select an answer before proceeding.');
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                showQuestion(currentQuestion);
+            }
+        }
+
+        function submitQuiz() {
+            const currentQuestionName = 'q' + (currentQuestion + 1);
+            const selectedAnswer = document.querySelector(`input[name="${currentQuestionName}"]:checked`);
+            
+            if (selectedAnswer) {
+                answers[currentQuestionName] = selectedAnswer.value;
+                calculateScore();
+            } else {
+                alert('Please select an answer before submitting.');
+            }
+        }
+
+        function calculateScore() {
+            let correct = 0;
+            for (let question in correctAnswers) {
+                if (answers[question] === correctAnswers[question]) {
+                    correct++;
+                }
+            }
+            
+            const percentage = Math.round((correct / totalQuestions) * 100);
+            displayResults(correct, percentage);
+        }
+
+        function displayResults(correct, percentage) {
+            document.querySelector('.quiz-content').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+            
+            const scoreDisplay = document.getElementById('score-display');
+            scoreDisplay.textContent = `${correct}/${totalQuestions} (${percentage}%)`;
+            
+            if (percentage >= 90) {
+                scoreDisplay.className = 'score';
+                document.getElementById('feedback').innerHTML = `
+                    <h3>🌟 Excellent Work!</h3>
+                    <p>Outstanding performance! You have a strong grasp of contract law fundamentals. You clearly understand the key concepts including mutual assent, consideration, contract formation, and remedies.</p>
+                `;
+            } else if (percentage >= 80) {
+                scoreDisplay.className = 'score';
+                document.getElementById('feedback').innerHTML = `
+                    <h3>👍 Great Job!</h3>
+                    <p>Very good performance! You understand most contract law concepts well. Review the questions you missed to strengthen your knowledge of specific cases and legal principles.</p>
+                `;
+            } else if (percentage >= 70) {
+                scoreDisplay.className = 'score average';
+                document.getElementById('feedback').innerHTML = `
+                    <h3>📚 Good Effort!</h3>
+                    <p>You're on the right track! You understand the basic concepts but should review the material more carefully, especially the case studies and their legal implications.</p>
+                `;
+            } else {
+                scoreDisplay.className = 'score poor';
+                document.getElementById('feedback').innerHTML = `
+                    <h3>📖 Keep Studying!</h3>
+                    <p>You may want to review Chapter 3 more thoroughly. Focus on understanding the essential elements of contracts, the difference between types of contracts, and how courts analyze contract disputes.</p>
+                `;
+            }
+        }
+
+        function reviewAnswers() {
+            reviewMode = true;
+            document.getElementById('results').classList.remove('show');
+            document.querySelector('.quiz-content').style.display = 'block';
+            
+            // Show all explanations and highlight correct/incorrect answers
+            document.querySelectorAll('.question-container').forEach((container, index) => {
+                const questionName = 'q' + (index + 1);
+                const explanation = container.querySelector('.explanation');
+                const userAnswer = answers[questionName];
+                const correctAnswer = correctAnswers[questionName];
+                
+                explanation.classList.add('show');
+                
+                // Highlight user's answer
+                const userRadio = container.querySelector(`input[value="${userAnswer}"]`);
+                const correctRadio = container.querySelector(`input[value="${correctAnswer}"]`);
+                
+                if (userAnswer === correctAnswer) {
+                    userRadio.parentElement.style.backgroundColor = '#d4edda';
+                    userRadio.parentElement.style.border = '2px solid #28a745';
+                } else {
+                    userRadio.parentElement.style.backgroundColor = '#f8d7da';
+                    userRadio.parentElement.style.border = '2px solid #dc3545';
+                    correctRadio.parentElement.style.backgroundColor = '#d4edda';
+                    correctRadio.parentElement.style.border = '2px solid #28a745';
+                }
+            });
+            
+            currentQuestion = 0;
+            showQuestion(0);
+            
+            // Hide navigation buttons in review mode
+            document.querySelector('.navigation').style.display = 'none';
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = {};
+            reviewMode = false;
+            
+            // Reset all styling
+            document.querySelectorAll('.options li').forEach(li => {
+                li.style.backgroundColor = '';
+                li.style.border = '';
+            });
+            
+            document.querySelectorAll('.explanation').forEach(exp => {
+                exp.classList.remove('show');
+            });
+            
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.checked = false;
+            });
+            
+            document.getElementById('results').classList.remove('show');
+            document.querySelector('.quiz-content').style.display = 'block';
+            document.querySelector('.navigation').style.display = 'flex';
+            
+            showQuestion(0);
+        }
+
+        // Initialize quiz
+        updateProgress();
+    </script>
+</body>
+</html>
