@@ -1,16 +1,12 @@
-> ## ⛔️ ARCHIVED — not maintained
->
-> This repository is read-only. It is kept for reference and history.
->
-> University of St. Thomas club site material (2025). Not maintained; ust.weldon.vip no longer resolves.
->
-> Archived 2026-09-04.
+> [!WARNING]
+> ## ⛔️ ARCHIVED — no longer maintained
+> This repository is read-only and kept for reference and history. University of St. Thomas club site material (2025). Not maintained; ust.weldon.vip no longer resolves. Archived 2026-09-04.
 
 # UST
 
 **What it was:** University of St. Thomas club site material (2025). Not maintained; ust.weldon.vip no longer resolves.
 
-**Status:** archived 2026-09-04 · last push 2026-09-04 · HTML · no releases, no support. 
+**Why it is archived:** no longer maintained — archived because the work either shipped elsewhere or stopped; superseded by the live products listed at github.com/ever-just. Use the successor instead. Last push 2026-09-05 · HTML · no releases, no support.
 
 ## Structure and layout
 
